@@ -1,0 +1,58 @@
+def calculate_average(scores_list): 
+       if not scores_list:
+         return  0.0 
+       return sum(scores_list)/len(scores_list) 
+def find_top_student(gradebook):
+   top_avarage = -1
+   top_student = None
+   for student, scores in gradebook:
+    avarage = calculate_average(scores)
+    if avarage> top_avarage or(avarage ==top_avarage and student < top_student):
+        top_avarage = avarage
+        top_student = student
+   return top_student 
+def get_grades_for_student(gradebook, student_name):
+     for student, scores in gradebook:
+       if student == student_name:
+          return scores
+     return []
+def get_hardest_quiz_index(gradebook):
+     if not gradebook:
+        return -1
+     num_quizz = len(gradebook[0][1])
+     lowest_avarage = None
+     hardest_quiz_index = 0
+     for i in range(num_quizz):
+         total = 0   # +=scores[i] incorrect
+         count = 0          #coount+=1
+         for student, scores in gradebook:
+            total += scores[i]
+            count += 1
+
+            avarage = total /count
+         if lowest_avarage is None or avarage < lowest_avarage:
+              lowest_avarage = avarage
+              hardest_quiz_index = i
+     return hardest_quiz_index
+
+def analyze_gradebook(gradebook):
+      top_student_name = find_top_student(gradebook)
+      grades_of_top_student = get_grades_for_student(gradebook, top_student_name)
+      hardest_quizz = get_hardest_quiz_index(gradebook)
+      return (top_student_name, grades_of_top_student, hardest_quizz) 
+gradebook = [
+    ('Alice', [85, 80, 92]),
+    ('Bob', [88, 74, 85]),
+    ('Charlie', [92, 85, 88]),
+    ('David', [90, 78, 94])
+]
+student= analyze_gradebook(gradebook)
+print(student)
+print(get_hardest_quiz_index(gradebook))
+
+
+
+
+
+
+
