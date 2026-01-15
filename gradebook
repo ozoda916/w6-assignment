@@ -20,17 +20,17 @@ def get_hardest_quiz_index(gradebook):
      if not gradebook:
         return -1
      num_quizz = len(gradebook[0][1])
-     lowest_avarage = None
+     lowest_avarage = float("inf")
      hardest_quiz_index = 0
      for i in range(num_quizz):
          total = 0   # +=scores[i] incorrect
-         count = 0          #coount+=1
+         student_count = len(gradebook)          #coount+=1
          for student, scores in gradebook:
-            total += scores[i]
-            count += 1
+            score= student[1]
+            total += score[i]
 
-            avarage = total /count
-         if lowest_avarage is None or avarage < lowest_avarage:
+            avarage = total /student_count
+         if avarage < lowest_avarage:
               lowest_avarage = avarage
               hardest_quiz_index = i
      return hardest_quiz_index
@@ -49,6 +49,7 @@ gradebook = [
 student= analyze_gradebook(gradebook)
 print(student)
 print(get_hardest_quiz_index(gradebook))
+
 
 
 
